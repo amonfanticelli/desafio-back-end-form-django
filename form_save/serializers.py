@@ -7,20 +7,7 @@ class FormSerializer(serializers.ModelSerializer):
     class Meta:
 
         model = Form
-        fields = [
-            "id",
-            "type",
-            "date",
-            "value",
-            "cpf",
-            "creditCard",
-            "time",
-            "storeOwner",
-            "storeName",
-        ]
-        read_only_fields = ["id"]
-
-    # ipdb.set_trace()
+        fields = "__all__"
 
     def create(self, validated_data):
 

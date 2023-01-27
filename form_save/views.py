@@ -4,6 +4,8 @@ from .forms import UploadFileForm
 from rest_framework.views import APIView, Response
 from .models import Form
 from .serializers import FormSerializer
+import ipdb
+from django.db.models import Sum
 
 
 def upload_file(request):
@@ -22,26 +24,36 @@ def handle_uploaded_file(f):
     with open("cnab/cnab.txt", "wb+") as destination:
         for chunk in f.chunks():
             destination.write(chunk)
+
     with open("cnab/cnab.txt", "r") as f:
-        contents = f.read()
+        contents = f.readlines()
         transactions = []
+
         for content in contents:
             content = {
                 "type": content[:1],
-                # "date",
-                # "value",
-                # "cpf",
-                # "creditCard",
-                # "time",
-                # "storeOwner",
-                # "storeName",
+                "date": f"{content[1:5]}-{content[5:7]}-{content[7:9]}",
+                "value": content[10:19],
+                "cpf": content[20:30],
+                "creditCard": content[31:42],
+                "time": f"{content[43:44]}:{content[45:46]}:{content[47:48]}",
+                "storeOwner": content[48:61],
+                "storeName": content[62:81],
             }
+
+            Form.objects.create(**content)
+
         transactions.append(content)
-        print(transactions)
+
+        return transactions
 
 
 class getAll(APIView):
     def get(self, request):
+        # transactions = Form.objects.values("storeName").annotate(
+        #     totalValue=Sum("value")
+        # )
+        # return Response(transactions)
         transactions = Form.objects.all()
-        serializer = FormSerializer(transactions)
+        serializer = FormSerializer(transactions, many=True)
         return Response(serializer.data, status=201)
