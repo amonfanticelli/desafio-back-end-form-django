@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Upload Form</title>
+  </head>
+  <body>
+    <h3>Upload Form</h3>
+    <hr />
+    <form
+      method="post"
+      enctype="multipart/form-data"
+      action="{% url 'upload_file' %}"
+    >
+      {% csrf_token %} {{form.file}}
+
+      <input type="submit" />
+    </form>
+  </body>
+</html>
