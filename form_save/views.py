@@ -27,33 +27,27 @@ def handle_uploaded_file(f):
 
     with open("cnab/cnab.txt", "r") as f:
         contents = f.readlines()
-        transactions = []
 
         for content in contents:
             content = {
                 "type": content[:1],
                 "date": f"{content[1:5]}-{content[5:7]}-{content[7:9]}",
                 "value": content[10:19],
-                "cpf": content[20:30],
+                "cpf": content[20:31],
                 "creditCard": content[31:42],
-                "time": f"{content[43:44]}:{content[45:46]}:{content[47:48]}",
-                "storeOwner": content[48:61],
-                "storeName": content[62:81],
+                "time": f"{content[42:44]}:{content[44:46]}:{content[46:48]}",
+                "storeOwner": content[48:62].strip(),
+                "storeName": content[62:].replace("\n", "").strip(),
             }
-
             Form.objects.create(**content)
-
-        transactions.append(content)
-
-        return transactions
 
 
 class getAll(APIView):
     def get(self, request):
-        # transactions = Form.objects.values("storeName").annotate(
-        #     totalValue=Sum("value")
-        # )
-        # return Response(transactions)
-        transactions = Form.objects.all()
-        serializer = FormSerializer(transactions, many=True)
-        return Response(serializer.data, status=201)
+        transactions = Form.objects.values("storeName").annotate(
+            totalValue=Sum("value")
+        )
+        return Response(transactions)
+        # transactions = Form.objects.all()
+        # serializer = FormSerializer(transactions, many=True)
+        # return Response(serializer.data, status=201)
