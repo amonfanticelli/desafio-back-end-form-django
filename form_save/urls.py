@@ -3,5 +3,5 @@ from . import views
 
 urlpatterns = [
     path("upload/", views.upload_file, name="upload_file"),
-    path("upload/success/url/", views.getAll.as_view()),
+    path("upload/success/url/", views.listStores.as_view()),
 ]

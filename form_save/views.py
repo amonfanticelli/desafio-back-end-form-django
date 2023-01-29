@@ -27,28 +27,23 @@ def handle_uploaded_file(f):
 
     with open("cnab/cnab.txt", "r") as f:
         contents = f.readlines()
-        transactions = []
 
         for content in contents:
             content = {
                 "type": content[:1],
                 "date": f"{content[1:5]}-{content[5:7]}-{content[7:9]}",
-                "value": content[10:19],
+                "value": int(content[9:20]) / 100,
                 "cpf": content[20:30],
                 "creditCard": content[31:42],
                 "time": f"{content[43:44]}:{content[45:46]}:{content[47:48]}",
-                "storeOwner": content[48:61],
-                "storeName": content[62:81],
+                "storeOwner": content[47:60],
+                "storeName": content[60:80],
             }
 
             Form.objects.create(**content)
 
-        transactions.append(content)
 
-        return transactions
-
-
-class getAll(APIView):
+class listStores(APIView):
     def get(self, request):
         # transactions = Form.objects.values("storeName").annotate(
         #     totalValue=Sum("value")
