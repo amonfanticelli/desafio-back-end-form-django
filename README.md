@@ -15,4 +15,5 @@
 
 ### Com a aplicação em execução:
 
+`abra o seu navegador e digite: http://localhost:8000/api/upload/` &
 `faça o envio do arquivo txt para poder visualizar o nome da loja e seu valor`
