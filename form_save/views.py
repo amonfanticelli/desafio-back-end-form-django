@@ -45,10 +45,10 @@ def handle_uploaded_file(f):
 
 class listStores(APIView):
     def get(self, request):
-        # transactions = Form.objects.values("storeName").annotate(
-        #     totalValue=Sum("value")
-        # )
-        # return Response(transactions)
-        transactions = Form.objects.all()
-        serializer = FormSerializer(transactions, many=True)
-        return Response(serializer.data, status=201)
+        transactions = Form.objects.values("storeName").annotate(
+            totalValue=Sum("value")
+        )
+        return Response(transactions)
+        # transactions = Form.objects.all()
+        # serializer = FormSerializer(transactions, many=True)
+        # return Response(serializer.data, status=201)
