@@ -1,8 +1,8 @@
 ## Available Scripts
 
-### Prepara o ambiente virtual e o ative com os comandos:
+### Prepare o ambiente virtual e o ative com os comandos:
 
-`python -m venv venv`
+`python -m venv venv` &
 `source venv/bin/activate`
 
 ### Antes de inicializar a aplicação, execute o comando:
