@@ -40,7 +40,7 @@ def handle_uploaded_file(f):
             Form.objects.create(**content)
 
 
-class getAll(APIView):
+class listStores(APIView):
     def get(self, request):
         transactions = Form.objects.values("storeName").annotate(
             totalValue=Sum("value")
