@@ -37,6 +37,14 @@ def handle_uploaded_file(f):
                 "storeOwner": content[48:62].strip(),
                 "storeName": content[62:].replace("\n", "").strip(),
             }
+            if (
+                int(content["type"])
+                == 2 | int(content["type"])
+                == 3 | int(content["type"])
+                == 9
+            ):
+                content["value"] = int(content[-10:19])
+
             Form.objects.create(**content)
 
 
